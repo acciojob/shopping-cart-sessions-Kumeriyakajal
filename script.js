@@ -11,6 +11,23 @@ const products = [
 
 // DOM elements
 const productList = document.getElementById("product-list");
+const cartList = document.getElementById("cart-list");
+
+ // Event listener for adding to cart
+    productList.addEventListener("click", (event) => {
+      if (event.target.classList.contains("add-to-cart-btn")) {
+        const productId = parseInt(event.target.dataset.id);
+        addToCart(productId);
+      }
+    });
+
+    // Event listener for removing from cart
+    cartList.addEventListener("click", (event) => {
+      if (event.target.classList.contains("remove-from-cart-btn")) {
+        const productId = parseInt(event.target.dataset.id);
+        removeFromCart(productId);
+      }
+    });
 
 // Render product list
 function renderProducts() {
@@ -20,6 +37,17 @@ function renderProducts() {
     productList.appendChild(li);
   });
 }
+
+ // Get cart items from session storage
+    function getCartItems() {
+      return JSON.parse(sessionStorage.getItem("cartItems")) || [];
+    }
+
+    // Get product by id
+    function getProductById(productId) {
+      return products.find((product) => product.id === productId);
+    }
+
 
 // Render cart list
 function renderCart() {
